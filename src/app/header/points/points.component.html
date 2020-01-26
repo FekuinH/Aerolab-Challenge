@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Amount</h1>
+
+<div matDialogContent>
+  <div class="dialog-container">
+    <form [formGroup]="pointsForm">
+      <mat-form-field>
+        <mat-select placeholder="Select amount" formControlName="amount">
+          <mat-option value=1000>1000</mat-option>
+          <mat-option value=5000>5000</mat-option>
+          <mat-option value=7500>7500</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button class="btn-dialog" mat-dialog-close>Close</button>
+  <button class="btn-dialog" [mat-dialog-close]="true" (click)="addCoins()">Add</button>
+</div>

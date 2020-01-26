@@ -1,0 +1,66 @@
+<div class="bgImg"></div>
+<div class="container" *ngIf="products">
+  <div class="row align-items-center mt-5 ">
+    <div class="col-md-8 col-9 filter" id="sorts">
+      <p>Sort by: 
+
+        <span class="badge-sort badge badge-light " [ngClass]="{'badge-active': sortRecent}"
+          (click)="orderRecent($event)">Most recent</span>
+        
+        <span class="badge-sort badge badge-light " [ngClass]="{'badge-active': sortLow}"
+          (click)="orderLow($event)">Lowest price</span> 
+          
+          <span class=" badge-sort badge badge-light"
+          [ngClass]="{'badge-active': sortHigh}" (click)="orderHigh($event)">Highest price</span>
+      </p>
+    </div>
+    <div class="col-md-3 col-3 pagination">
+      <mat-paginator [length]="products.length" [pageSize]="page_size" [pageSizeOptions]="pageSizeOptions"
+        (page)="handlePage($event)">
+      </mat-paginator>
+    </div>
+  </div>
+  <hr>
+</div>
+
+<div class="container">
+  <div class="row no-gutters" *ngIf="products?.length>0">
+
+    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 mt-5"
+      *ngFor="let product of products | paginator:page_size:page_number">
+      <div class="card">
+        <div class="card-body">
+          <img class="img-fluid" src="{{product.img.url}}" alt="">
+          <hr>
+
+          <div>
+            <small>{{product.category}}</small>
+            <h6>{{product.name}}</h6>
+          </div>
+
+        </div>
+        <div style="margin-left: -16px">
+
+          <div
+            [ngClass]="{'product-hover': currentCoins >= product.cost, 'product-hover-notBuy': currentCoins < product.cost }">
+          </div>
+
+          <div *ngIf="currentCoins >= product.cost" class="icon-buy"></div>
+          <div class="cantBuy" *ngIf="currentCoins < product.cost"><span class="badge badge-secondary">Left
+              {{product.cost - currentCoins}} <img src="../../assets/icons/coin.svg" style="width: 20px" alt=""></span>
+          </div>
+          <h3 class="cost mt-3 mb-4">{{product.cost}}<img src="../../assets/icons/coin.svg" alt=""></h3>
+          <button class="md-raised" *ngIf="currentCoins > product.cost && !redeeming" color="primary"
+            (click)="buy(product)">Buy now</button>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-12 text-right mt-4 pagination">
+      <mat-paginator [length]="products.length" [pageSize]="page_size" [pageSizeOptions]="pageSizeOptions"
+        (page)="handlePage($event)"> 
+      </mat-paginator>
+    </div>
+  </div>
+  <hr>
+</div>
